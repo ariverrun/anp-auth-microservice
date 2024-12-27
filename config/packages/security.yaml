@@ -1,0 +1,41 @@
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    providers:
+        users_in_memory: { memory: null }
+        api_user:
+            id: App\Application\Service\Security\UserProvider\UserProviderInterface
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        api_auth_user:
+            pattern: ^/api/%api_version%/user-auth
+            stateless: true
+            provider: api_user
+            json_login:
+                check_path: /api/%api_version%/user-auth
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        
+        api_game_auth:
+            pattern:   ^/api/%api_version%
+            stateless: true
+            provider: api_user
+            jwt: ~
+
+    access_control:
+        - { path: ^/api/%api_version%/user-auth, methods: [POST], roles: PUBLIC_ACCESS }
+        - { path: ^/api/%api_version%/doc, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
+when@test:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 
+                time_cost: 3
+                memory_cost: 10
+

@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: 'ANP Auth Microservice'
+  description: 'Architecture and patterns course Auth Microservice'
+  version: 1.0.1
+paths:
+  /api/v1/user-auth:
+    post:
+      operationId: post_app_api_user_auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUserRequestDto'
+      responses:
+        '200':
+          description: 'Returns user JWT'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthUserResponseDto'
+components:
+  schemas:
+    AuthUserRequestDto:
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      type: object
+    AuthUserResponseDto:
+      required:
+        - accessToken
+        - refreshToken
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+      type: object
+
