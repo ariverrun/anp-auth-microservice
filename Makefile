@@ -27,3 +27,6 @@ cs_fix:
 
 openapi_doc:
 	php bin/console nelmio:apidoc:dump --format=yaml > doc/openapi.yaml
+
+unit_tests:
+	php vendor/bin/phpunit tests/Unit

@@ -7,7 +7,7 @@ on:
     branches:
       - main
 jobs:
-  build_and_lint:
+  linter:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,3 +27,16 @@ jobs:
       - name: Yamllint
         run: yamllint .
 
+  unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'        
+      - name: Install dependencies via Composer
+        run: COMPOSER_NO_DEV=0 composer install
+      - name: Run Unit-tests
+        run: php vendor/bin/phpunit tests/Unit
