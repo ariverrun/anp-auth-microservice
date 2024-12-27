@@ -7,28 +7,28 @@ deptrac:
         -
             name: Domain
             collectors:
-                - 
+                -
                     type: directory
                     value: /src/Domain/.*
         -
             name: Application
             collectors:
-                - 
+                -
                     type: directory
                     value: /src/Application/.*
         -
             name: Infrastructure
             collectors:
-                - 
+                -
                     type: directory
                     value: /src/Infrastructure/.*
 
         -
             name: UI
             collectors:
-                - 
+                -
                     type: directory
-                    value: /src/UI/.*                    
+                    value: /src/UI/.*
     ruleset:
         Domain:
         Application:
@@ -37,4 +37,4 @@ deptrac:
             - Domain
             - Application
         UI:
-            - Application            
+            - Application

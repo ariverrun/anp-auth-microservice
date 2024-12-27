@@ -22,12 +22,5 @@ services:
     App\Infrastructure\Service\Security\UserProvider\DemoApiUserProvider:
         arguments:
             $demoUsersData:
-                -   id: 1
-                    username: joe
-                    password: joe1234
-                    roles: []
-
-                -   id: 2
-                    username: mary
-                    password: mary1234
-                    roles: []
+                - { id: 1, username: joe, password: joe1234, roles: [] }
+                - { id: 2, username: mary, password: mary1234, roles: [] }

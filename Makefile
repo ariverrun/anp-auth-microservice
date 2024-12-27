@@ -24,3 +24,6 @@ cs_check:
 
 cs_fix:
 	php vendor/bin/php-cs-fixer fix
+
+openapi_doc:
+	php bin/console nelmio:apidoc:dump --format=yaml > doc/openapi.yaml

@@ -23,5 +23,7 @@ jobs:
       - name: CS-Fixer dry-run
         run: php vendor/bin/php-cs-fixer fix --dry-run    
       - name: Deptrac analyse
-        run: vendor/bin/deptrac analyse            
+        run: vendor/bin/deptrac analyse
+      - name: Yamllint
+        run: yamllint .
 
