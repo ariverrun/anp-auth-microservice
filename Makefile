@@ -28,6 +28,9 @@ cs_fix:
 phpstan:
 	php vendor/bin/phpstan analyse -c phpstan.neon
 
+deptrac:
+	vendor/bin/deptrac analyse
+
 openapi_doc:
 	php bin/console nelmio:apidoc:dump --format=yaml > doc/openapi.yaml
 
@@ -36,3 +39,9 @@ tests_unit:
 
 tests_integration:
 	php vendor/bin/phpunit tests/Integration
+
+migration:
+	php bin/console doctrine:migrations:diff
+
+migrate:
+	php bin/console doctrine:migrations:migrate

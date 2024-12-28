@@ -4,6 +4,25 @@ info:
   description: 'Architecture and patterns course Auth Microservice'
   version: 1.0.0
 paths:
+  /api/v1/game-auth:
+    post:
+      operationId: post_app_api_game_auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthInGameRequestDto'
+      responses:
+        '200':
+          description: 'Returns JWT to access desired game'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthInGameResponseDto'
+      security:
+        -
+          UserJWTBearer: []
   /api/v1/user-auth:
     post:
       operationId: post_app_api_user_auth
@@ -20,8 +39,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthUserResponseDto'
+  /api/v1/game-session:
+    post:
+      operationId: post_app_api_create_game_sesion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGameSessionRequestDto'
+      responses:
+        '200':
+          description: 'Creates session for a game, registers users in it'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateGameSessionResponseDto'
+      security:
+        -
+          GameServiceApiToken: []
 components:
   schemas:
+    AuthInGameRequestDto:
+      required:
+        - gameSessionId
+      properties:
+        gameSessionId:
+          type: integer
+          minimum: 0
+          exclusiveMinimum: true
+      type: object
     AuthUserRequestDto:
       required:
         - username
@@ -30,6 +77,27 @@ components:
         username:
           type: string
         password:
+          type: string
+      type: object
+    CreateGameSessionRequestDto:
+      required:
+        - gameId
+        - userIds
+      properties:
+        gameId:
+          type: integer
+          minimum: 0
+          exclusiveMinimum: true
+        userIds:
+          type: array
+          items:
+            type: integer
+      type: object
+    AuthInGameResponseDto:
+      required:
+        - accessToken
+      properties:
+        accessToken:
           type: string
       type: object
     AuthUserResponseDto:
@@ -42,4 +110,20 @@ components:
         refreshToken:
           type: string
       type: object
+    CreateGameSessionResponseDto:
+      required:
+        - gameSessionId
+      properties:
+        gameSessionId:
+          type: integer
+      type: object
+  securitySchemes:
+    UserJWTBearer:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer
+    GameServiceApiToken:
+      type: apiKey
+      name: X-Auth-Token
+      in: header
 

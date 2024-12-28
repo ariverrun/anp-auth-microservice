@@ -5,6 +5,8 @@ security:
         users_in_memory: { memory: null }
         api_user:
             id: App\Application\Service\Security\UserProvider\UserProviderInterface
+        api_client:
+            id: App\Application\Service\Security\UserProvider\ApiClientUserProviderInterface
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -19,6 +21,13 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
+        api_game_service:
+            pattern: ^/api/%api_version%/game-session
+            stateless: true
+            provider: api_client
+            custom_authenticators:
+                - App\Infrastructure\Service\Security\Authenticator\ApiKeyAuthenticator
+
         api_game_auth:
             pattern: ^/api/%api_version%
             stateless: true
@@ -28,7 +37,12 @@ security:
     access_control:
         - { path: ^/api/%api_version%/user-auth, methods: [POST], roles: PUBLIC_ACCESS }
         - { path: ^/api/%api_version%/doc, roles: PUBLIC_ACCESS }
+        - { path: ^/api/%api_version%/game-session, roles: ROLE_GAME_SERVICE }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
+    role_hierarchy:
+        ROLE_GAME_SERVICE:
+            - ROLE_SERVICE
 
 when@test:
     security:
