@@ -7,7 +7,7 @@ on:
     branches:
       - main
 jobs:
-  build_and_lint:
+  linter:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,3 +27,38 @@ jobs:
       - name: Yamllint
         run: yamllint .
 
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      postgresql:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: '!ChangeMe!'
+          POSTGRES_DB: app
+          POSTGRES_USER: app
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5    
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'        
+      - name: Install dependencies via Composer
+        run: COMPOSER_NO_DEV=0 composer install
+      - name: Run Unit-tests
+        run: php vendor/bin/phpunit tests/Unit
+      - name: Create test DB
+        run: php bin/console --env=test doctrine:database:create
+      - name: Create test DB schema
+        run: php bin/console --env=test doctrine:schema:create
+      - name: Generate JWT keys
+        run: php bin/console lexik:jwt:generate-keypair --overwrite --env=test -n
+      - name: Run Integration-tests
+        run: php vendor/bin/phpunit tests/Integration

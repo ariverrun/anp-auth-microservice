@@ -25,5 +25,14 @@ cs_check:
 cs_fix:
 	php vendor/bin/php-cs-fixer fix
 
+phpstan:
+	php vendor/bin/phpstan analyse -c phpstan.neon
+
 openapi_doc:
 	php bin/console nelmio:apidoc:dump --format=yaml > doc/openapi.yaml
+
+tests_unit:
+	php vendor/bin/phpunit tests/Unit
+
+tests_integration:
+	php vendor/bin/phpunit tests/Integration
