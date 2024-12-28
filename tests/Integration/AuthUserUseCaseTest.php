@@ -8,9 +8,7 @@ use App\Application\Service\Security\UserProvider\UserProviderInterface;
 use App\Application\UseCase\AuthUser\AuthUserDto;
 use App\Application\UseCase\AuthUser\AuthUserUseCase;
 use App\Domain\Entity\UserRefreshToken;
-use Doctrine\ORM\EntityManagerInterface;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
-use Tests\Mock\RefreshTokenRepositoryMock;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -55,16 +53,6 @@ class AuthUserUseCaseTest extends KernelTestCase
                                 ->willReturn(UserRefreshToken::class);
 
         $container->set(RefreshTokenManagerInterface::class, $refreshTokenManagerMock);
-
-        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
-
-        $refreshTokenRepositoryMock = new RefreshTokenRepositoryMock();
-
-        $entityManagerMock->expects($this->any())
-                            ->method('getRepository')
-                            ->willReturn($refreshTokenRepositoryMock);
-
-        $container->set(EntityManagerInterface::class, $entityManagerMock);
 
         $authUserUseCase = $container->get(AuthUserUseCase::class);
         $dto = new AuthUserDto($userIdentifier, $userPassword);
@@ -112,16 +100,6 @@ class AuthUserUseCaseTest extends KernelTestCase
                                 ->willReturn(UserRefreshToken::class);
 
         $container->set(RefreshTokenManagerInterface::class, $refreshTokenManagerMock);
-
-        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
-
-        $refreshTokenRepositoryMock = new RefreshTokenRepositoryMock();
-
-        $entityManagerMock->expects($this->any())
-                            ->method('getRepository')
-                            ->willReturn($refreshTokenRepositoryMock);
-
-        $container->set(EntityManagerInterface::class, $entityManagerMock);
 
         $authUserUseCase = $container->get(AuthUserUseCase::class);
         $dto = new AuthUserDto($userIdentifier, $userInvalidPassword);
