@@ -27,7 +27,7 @@ jobs:
       - name: Yamllint
         run: yamllint .
 
-  unit_tests:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,3 +40,5 @@ jobs:
         run: COMPOSER_NO_DEV=0 composer install
       - name: Run Unit-tests
         run: php vendor/bin/phpunit tests/Unit
+      - name: Run Integration-tests
+        run: php vendor/bin/phpunit tests/Integration
