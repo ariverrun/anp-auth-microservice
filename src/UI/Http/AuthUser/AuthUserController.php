@@ -6,7 +6,7 @@ namespace App\UI\Http\AuthUser;
 
 use App\Application\UseCase\AuthUser\AuthUserDto;
 use App\Application\UseCase\AuthUser\AuthUserUseCaseInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
