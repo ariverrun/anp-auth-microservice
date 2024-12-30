@@ -34,11 +34,20 @@ deptrac:
 openapi_doc:
 	php bin/console nelmio:apidoc:dump --format=yaml > doc/openapi.yaml
 
+init_test_db:
+	php bin/console doctrine:database:create --env=test && php bin/console --env=test doctrine:schema:create
+
+drop_test_db:
+	php bin/console doctrine:database:drop --force --env=test
+
 tests_unit:
 	php vendor/bin/phpunit tests/Unit
 
 tests_integration:
 	php vendor/bin/phpunit tests/Integration
+
+tests_functional:
+	php vendor/bin/phpunit tests/Functional
 
 migration:
 	php bin/console doctrine:migrations:diff

@@ -6,7 +6,7 @@ namespace App\UI\Http\CreateGameSession;
 
 use App\Application\UseCase\CreateGameSession\CreateGameSessionDto;
 use App\Application\UseCase\CreateGameSession\CreateGameSessionUseCaseInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use Nelmio\ApiDocBundle\Attribute\Security;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

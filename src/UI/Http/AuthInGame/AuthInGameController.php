@@ -6,7 +6,7 @@ namespace App\UI\Http\AuthInGame;
 
 use App\Application\UseCase\AuthInGame\AuthInGameDto;
 use App\Application\UseCase\AuthInGame\AuthInGameUseCaseInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use Nelmio\ApiDocBundle\Attribute\Security;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

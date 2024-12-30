@@ -20,7 +20,6 @@ class ApiClientUser implements UserInterface
     private ?int $id = null;
 
     #[ORM\Column(type: 'string')]
-    /* @phpstan-ignore-next-line */
     private string $apiKey;
 
     #[ORM\Column(type: 'json')]
@@ -45,5 +44,24 @@ class ApiClientUser implements UserInterface
     public function getUserIdentifier(): string
     {
         return $this->apiKey;
+    }
+
+    public function addRole(string $role): self
+    {
+        $this->roles[] = $role;
+
+        return $this;
+    }
+
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(string $apiKey): self
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 }
