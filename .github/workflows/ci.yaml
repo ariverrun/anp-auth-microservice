@@ -60,5 +60,7 @@ jobs:
         run: php bin/console --env=test doctrine:schema:create
       - name: Generate JWT keys
         run: php bin/console lexik:jwt:generate-keypair --overwrite --env=test -n
-      - name: Run Integration-tests
+      - name: Run Integration tests
         run: php vendor/bin/phpunit tests/Integration
+      - name: Run Functional tests
+        run: php vendor/bin/phpunit tests/Functional        
