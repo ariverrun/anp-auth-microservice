@@ -30,6 +30,7 @@ class AuthInGameUseCase implements AuthInGameUseCaseInterface
 
         $accessToken = $this->jWTTokenManager->createFromPayload($user, [
             'gameSessionId' => $dto->gameSessionId,
+            'userId' => $dto->userId,
         ]);
 
         return new AuthInGameResult($accessToken);
